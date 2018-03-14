@@ -1,6 +1,7 @@
-﻿using SolverCore.Model;
+﻿using Microsoft.Extensions.DependencyInjection;
+using PuzzleRepository.Model;
+using SolverCore.Interfaces;
 using System;
-using System.Collections.Generic;
 
 namespace SudokuSolver
 {
@@ -8,11 +9,18 @@ namespace SudokuSolver
     {
         static void Main(string[] args)
         {
-            foreach (var puz in PuzzleData.Puzzles)
+            var serviceProvider = new ServiceCollection()
+                .AddScoped<IPuzzleRepository, LocalPuzzleRepository>()
+                .BuildServiceProvider();
+
+            var puzzleRepo = serviceProvider.GetService<IPuzzleRepository>();
+
+            var puzzles = puzzleRepo.GetPuzzles();
+
+            foreach (var puz in puzzles)
             {
-                var p = new Puzzle(puz);
-                p.Solve();
-                Console.WriteLine(p.ToString());
+                puz.Solve();
+                Console.WriteLine(puz.ToString());
             }
         }
     }

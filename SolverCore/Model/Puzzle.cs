@@ -7,7 +7,7 @@ using System.Text;
 
 namespace SolverCore.Model
 {
-    public class Puzzle
+    public class Puzzle : IPuzzle
     {
         public static readonly List<int> Completed = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
